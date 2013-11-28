@@ -7,7 +7,7 @@ import net.minecraft.util.Icon;
 import net.minecraftforge.common.ForgeDirection;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
-import thaumcraft.api.aspects.IAspectSource;
+import thaumcraft.api.aspects.IAspectContainer;
 import buildcraft.api.gates.ITrigger;
 import buildcraft.api.gates.ITriggerParameter;
 
@@ -52,8 +52,8 @@ public class AspectAmountTrigger implements ITrigger {
 
 	@Override
 	public boolean isTriggerActive(ForgeDirection side, TileEntity tile, ITriggerParameter parameter) {
-		if (tile instanceof IAspectSource) {
-			IAspectSource source = (IAspectSource) tile;
+		if (tile instanceof IAspectContainer) {
+			IAspectContainer source = (IAspectContainer) tile;
 			AspectList aspects = source.getAspects();
 			if (aspects != null) {
 				Aspect aspect = aspects.getAspectsSortedAmount()[0];

@@ -8,7 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
-import thaumcraft.api.aspects.IAspectSource;
+import thaumcraft.api.aspects.IAspectContainer;
 import buildcraft.api.gates.ITrigger;
 import buildcraft.api.gates.ITriggerProvider;
 import buildcraft.api.transport.IPipe;
@@ -33,7 +33,7 @@ public class TriggerProvider implements ITriggerProvider {
 
 		for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
 			TileEntity tile = world.getBlockTileEntity(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ);
-			if (tile instanceof IAspectSource) {
+			if (tile instanceof IAspectContainer) {
 				list.add(ThaumcraftGates.aspectTriggerMinus8);
 				list.add(ThaumcraftGates.aspectTrigger08);
 				list.add(ThaumcraftGates.aspectTrigger16);
