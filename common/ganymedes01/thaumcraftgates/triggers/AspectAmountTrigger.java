@@ -10,6 +10,8 @@ import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
 import buildcraft.api.gates.ITrigger;
 import buildcraft.api.gates.ITriggerParameter;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * Thaumcraft Gates
@@ -20,7 +22,9 @@ import buildcraft.api.gates.ITriggerParameter;
 
 public class AspectAmountTrigger implements ITrigger {
 
+	@SideOnly(Side.CLIENT)
 	private Icon icon;
+
 	private final String uniqueTag, description;
 	private final int amount;
 

@@ -6,8 +6,6 @@ import java.util.LinkedList;
 
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
 import thaumcraft.api.aspects.IAspectContainer;
 import buildcraft.api.gates.ITrigger;
 import buildcraft.api.gates.ITriggerProvider;
@@ -24,29 +22,21 @@ public class TriggerProvider implements ITriggerProvider {
 
 	@Override
 	public LinkedList<ITrigger> getPipeTriggers(IPipe pipe) {
-		LinkedList<ITrigger> list = new LinkedList<ITrigger>();
-
-		World world = pipe.getContainer().worldObj;
-		int x = pipe.getContainer().xCoord;
-		int y = pipe.getContainer().yCoord;
-		int z = pipe.getContainer().zCoord;
-
-		for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
-			TileEntity tile = world.getBlockTileEntity(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ);
-			if (tile instanceof IAspectContainer) {
-				list.add(ThaumcraftGates.aspectTriggerMinus8);
-				list.add(ThaumcraftGates.aspectTrigger08);
-				list.add(ThaumcraftGates.aspectTrigger16);
-				list.add(ThaumcraftGates.aspectTrigger32);
-				list.add(ThaumcraftGates.aspectTrigger64);
-			}
-		}
-
-		return list;
+		return null;
 	}
 
 	@Override
 	public LinkedList<ITrigger> getNeighborTriggers(Block block, TileEntity tile) {
-		return null;
+		LinkedList<ITrigger> list = new LinkedList<ITrigger>();
+
+		if (tile instanceof IAspectContainer) {
+			list.add(ThaumcraftGates.aspectTriggerMinus8);
+			list.add(ThaumcraftGates.aspectTrigger08);
+			list.add(ThaumcraftGates.aspectTrigger16);
+			list.add(ThaumcraftGates.aspectTrigger32);
+			list.add(ThaumcraftGates.aspectTrigger64);
+		}
+
+		return list;
 	}
 }

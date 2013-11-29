@@ -3,16 +3,19 @@ package ganymedes01.thaumcraftgates;
 import ganymedes01.thaumcraftgates.lib.Reference;
 import ganymedes01.thaumcraftgates.triggers.AspectAmountTrigger;
 import ganymedes01.thaumcraftgates.triggers.TriggerProvider;
+import net.minecraft.item.Item;
+import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
 import buildcraft.api.gates.ActionManager;
 import buildcraft.api.gates.ITrigger;
+import buildcraft.transport.BlockGenericPipe;
+import buildcraft.transport.TransportProxyClient;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.relauncher.Side;
@@ -35,12 +38,20 @@ public class ThaumcraftGates {
 	public static ITrigger aspectTrigger08 = new AspectAmountTrigger(8);
 	public static ITrigger aspectTriggerMinus8 = new AspectAmountTrigger(-8);
 
+	public static Item thaumiumPipe;
+
 	@Instance(Reference.MOD_ID)
 	public static ThaumcraftGates instance;
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(this);
+
+		thaumiumPipe = BlockGenericPipe.registerPipe(2457, ThaumiumPipe.class);
+		thaumiumPipe.setUnlocalizedName("thaumiumPipe");
+
+		if (event.getSide() == Side.CLIENT)
+			MinecraftForgeClient.registerItemRenderer(thaumiumPipe.itemID, TransportProxyClient.pipeItemRenderer);
 	}
 
 	@EventHandler
@@ -53,10 +64,6 @@ public class ThaumcraftGates {
 		ActionManager.registerTriggerProvider(new TriggerProvider());
 	}
 
-	@EventHandler
-	public void postInit(FMLPostInitializationEvent event) {
-	}
-
 	@ForgeSubscribe
 	@SideOnly(Side.CLIENT)
 	public void loadTextures(TextureStitchEvent.Pre evt) {
@@ -66,6 +73,7 @@ public class ThaumcraftGates {
 			aspectTrigger16.registerIcons(evt.map);
 			aspectTrigger08.registerIcons(evt.map);
 			aspectTriggerMinus8.registerIcons(evt.map);
-		}
+		} else if (evt.map.textureType == 0)
+			ThaumiumPipe.registerIcons(evt.map);
 	}
 }
