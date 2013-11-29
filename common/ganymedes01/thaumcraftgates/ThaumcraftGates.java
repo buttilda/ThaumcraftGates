@@ -3,23 +3,30 @@ package ganymedes01.thaumcraftgates;
 import ganymedes01.thaumcraftgates.lib.Reference;
 import ganymedes01.thaumcraftgates.triggers.AspectAmountTrigger;
 import ganymedes01.thaumcraftgates.triggers.TriggerProvider;
+
+import java.io.File;
+import java.util.logging.Level;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
 import thaumcraft.api.ItemApi;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
+import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.ConfigResearch;
 import buildcraft.api.gates.ActionManager;
 import buildcraft.api.gates.ITrigger;
 import buildcraft.core.utils.Localization;
 import buildcraft.transport.BlockGenericPipe;
 import buildcraft.transport.TransportProxyClient;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -51,16 +58,32 @@ public class ThaumcraftGates {
 	public static ITrigger aspectTriggerMinus8 = new AspectAmountTrigger(-8);
 
 	public static Item thaumiumPipe;
+	private static int thaumiumPipeID;
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(this);
 
+		// Load ID config file
+		Configuration config = new Configuration(new File(event.getModConfigurationDirectory().getAbsolutePath() + File.separator + Reference.MOD_ID + ".cfg"));
+		try {
+			config.load();
+
+			thaumiumPipeID = config.getItem("Thaumium Pipe ID", 2457).getInt(2457);
+
+		} catch (Exception e) {
+			FMLLog.log(Level.SEVERE, e, Reference.MOD_NAME + " has had a problem loading its configuration");
+			throw new RuntimeException(e);
+		} finally {
+			config.save();
+		}
+
 		// Load BuildCraft localizations
 		Localization.addLocalization("/assets/thaumcraftgates/lang/", "en_US");
 
 		// Create and register Pipe
-		thaumiumPipe = BlockGenericPipe.registerPipe(2457, ThaumiumPipe.class);
+		thaumiumPipe = BlockGenericPipe.registerPipe(thaumiumPipeID, ThaumiumPipe.class);
+		thaumiumPipe.setCreativeTab(Thaumcraft.tabTC);
 
 		// Register pipe renderer
 		if (event.getSide() == Side.CLIENT)
