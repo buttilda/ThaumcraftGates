@@ -1,15 +1,23 @@
 package ganymedes01.thaumcraftgates.triggers;
 
 import ganymedes01.thaumcraftgates.lib.Reference;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraftforge.common.ForgeDirection;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
+import thaumcraft.api.aspects.IEssentiaContainerItem;
 import buildcraft.api.gates.ITrigger;
 import buildcraft.api.gates.ITriggerParameter;
+import buildcraft.api.gates.TriggerParameter;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -61,7 +69,24 @@ public class AspectAmountTrigger implements ITrigger {
 			AspectList aspects = source.getAspects();
 			if (aspects != null) {
 				Aspect aspect = aspects.getAspectsSortedAmount()[0];
-				return testAspect(aspects, aspect, amount);
+				if (parameter != null) {
+					ItemStack paramStack = parameter.getItemStack();
+					if (paramStack != null) {
+						Item paramItem = paramStack.getItem();
+						if (paramItem instanceof IEssentiaContainerItem) {
+							aspects = ((IEssentiaContainerItem) paramItem).getAspects(paramStack);
+							if (aspects != null) {
+								for (int i = 0; i < aspects.size(); i++)
+									Logger.getLogger(Reference.MOD_ID).log(Level.WARNING, aspects.getAspects()[0].toString());
+								if (aspects != null)
+									aspect = aspects.getAspectsSortedAmount()[0];
+							}
+						}
+					}
+				}
+
+				if (aspects != null)
+					return testAspect(aspects, aspect, amount);
 			}
 		}
 		return false;
@@ -73,8 +98,7 @@ public class AspectAmountTrigger implements ITrigger {
 
 	@Override
 	public boolean hasParameter() {
-		return false;
-		// TODO return true;
+		return true;
 	}
 
 	@Override
@@ -84,32 +108,11 @@ public class AspectAmountTrigger implements ITrigger {
 
 	@Override
 	public ITriggerParameter createParameter() {
-		return new AspectTriggerParameter();
+		return new TriggerParameter();
 	}
 
 	@Override
 	public int getLegacyId() {
 		return 0;
 	}
-
-	// TODO Add after BuildCraft fix problem with NBT and Gates
-	// if (parameter != null) {
-	// ItemStack paramStack = parameter.getItemStack();
-	// if (paramStack != null) {
-	// Item paramItem = paramStack.getItem();
-	// if (paramItem instanceof IEssentiaContainerItem) {
-	// aspects = ((IEssentiaContainerItem)
-	// paramItem).getAspects(paramStack);
-	// if (aspects != null) {
-	// for (int i = 0; i < aspects.size(); i++)
-	// Logger.getLogger(Reference.MOD_ID).log(Level.WARNING,
-	// aspects.getAspects()[0].toString());
-	// if (aspects != null)
-	// aspect = aspects.getAspectsSortedAmount()[0];
-	// }
-	// }
-	// }
-	// }
-	//
-	// if (aspects != null)
 }

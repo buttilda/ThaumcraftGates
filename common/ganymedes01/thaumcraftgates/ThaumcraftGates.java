@@ -3,19 +3,28 @@ package ganymedes01.thaumcraftgates;
 import ganymedes01.thaumcraftgates.lib.Reference;
 import ganymedes01.thaumcraftgates.triggers.AspectAmountTrigger;
 import ganymedes01.thaumcraftgates.triggers.TriggerProvider;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
+import thaumcraft.api.ItemApi;
+import thaumcraft.api.ThaumcraftApi;
+import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.aspects.AspectList;
+import thaumcraft.common.config.ConfigResearch;
 import buildcraft.api.gates.ActionManager;
 import buildcraft.api.gates.ITrigger;
+import buildcraft.core.utils.Localization;
 import buildcraft.transport.BlockGenericPipe;
 import buildcraft.transport.TransportProxyClient;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.relauncher.Side;
@@ -32,6 +41,9 @@ import cpw.mods.fml.relauncher.SideOnly;
 @NetworkMod(channels = { Reference.CHANNEL_NAME }, clientSideRequired = true, serverSideRequired = true)
 public class ThaumcraftGates {
 
+	@Instance(Reference.MOD_ID)
+	public static ThaumcraftGates instance;
+
 	public static ITrigger aspectTrigger64 = new AspectAmountTrigger(64);
 	public static ITrigger aspectTrigger32 = new AspectAmountTrigger(32);
 	public static ITrigger aspectTrigger16 = new AspectAmountTrigger(16);
@@ -40,22 +52,24 @@ public class ThaumcraftGates {
 
 	public static Item thaumiumPipe;
 
-	@Instance(Reference.MOD_ID)
-	public static ThaumcraftGates instance;
-
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(this);
 
-		thaumiumPipe = BlockGenericPipe.registerPipe(2457, ThaumiumPipe.class);
-		thaumiumPipe.setUnlocalizedName("thaumiumPipe");
+		// Load BuildCraft localizations
+		Localization.addLocalization("/assets/thaumcraftgates/lang/", "en_US");
 
+		// Create and register Pipe
+		thaumiumPipe = BlockGenericPipe.registerPipe(2457, ThaumiumPipe.class);
+
+		// Register pipe renderer
 		if (event.getSide() == Side.CLIENT)
 			MinecraftForgeClient.registerItemRenderer(thaumiumPipe.itemID, TransportProxyClient.pipeItemRenderer);
 	}
 
 	@EventHandler
 	public void load(FMLInitializationEvent event) {
+		// Register BuildCraft triggers
 		ActionManager.registerTrigger(aspectTriggerMinus8);
 		ActionManager.registerTrigger(aspectTrigger08);
 		ActionManager.registerTrigger(aspectTrigger16);
@@ -64,9 +78,22 @@ public class ThaumcraftGates {
 		ActionManager.registerTriggerProvider(new TriggerProvider());
 	}
 
+	@EventHandler
+	public void postInit(FMLPostInitializationEvent event) {
+		// Create AspectList used to craft a Thaumium Pipe
+		AspectList list = new AspectList().add(Aspect.ORDER, 2).add(Aspect.EARTH, 2).add(Aspect.FIRE, 1).add(Aspect.AIR, 1).add(Aspect.ENTROPY, 1);
+
+		// Register Thaumium Pipe recipe
+		ConfigResearch.recipes.put("THAUMIUM_PIPE", ThaumcraftApi.addArcaneCraftingRecipe("THAUMIUM_PIPE", new ItemStack(thaumiumPipe, 8), list, "xyx", 'x', ItemApi.getItem("itemResource", 2), 'y', Block.glass));
+
+		// Register Thaumium Pipe research
+		new ResearchPipe();
+	}
+
 	@ForgeSubscribe
 	@SideOnly(Side.CLIENT)
 	public void loadTextures(TextureStitchEvent.Pre evt) {
+		// Register mod icons
 		if (evt.map.textureType == 1) {
 			aspectTrigger64.registerIcons(evt.map);
 			aspectTrigger32.registerIcons(evt.map);
