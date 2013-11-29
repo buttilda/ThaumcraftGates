@@ -1,6 +1,8 @@
 package ganymedes01.thaumcraftgates;
 
 import ganymedes01.thaumcraftgates.lib.Reference;
+import ganymedes01.thaumcraftgates.pipes.ThaumiumPipe;
+import ganymedes01.thaumcraftgates.research.ResearchPipe;
 import ganymedes01.thaumcraftgates.triggers.AspectAmountTrigger;
 import ganymedes01.thaumcraftgates.triggers.TriggerProvider;
 

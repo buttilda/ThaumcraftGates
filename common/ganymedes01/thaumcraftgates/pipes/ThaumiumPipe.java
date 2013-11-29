@@ -1,4 +1,4 @@
-package ganymedes01.thaumcraftgates;
+package ganymedes01.thaumcraftgates.pipes;
 
 import ganymedes01.thaumcraftgates.lib.Reference;
 import net.minecraft.client.renderer.texture.IconRegister;

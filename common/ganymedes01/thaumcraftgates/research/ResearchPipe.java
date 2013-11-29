@@ -1,5 +1,6 @@
-package ganymedes01.thaumcraftgates;
+package ganymedes01.thaumcraftgates.research;
 
+import ganymedes01.thaumcraftgates.ThaumcraftGates;
 import net.minecraft.item.ItemStack;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;

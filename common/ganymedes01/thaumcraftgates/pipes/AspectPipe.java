@@ -1,4 +1,4 @@
-package ganymedes01.thaumcraftgates;
+package ganymedes01.thaumcraftgates.pipes;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
