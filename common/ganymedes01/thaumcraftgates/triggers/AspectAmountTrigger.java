@@ -1,13 +1,8 @@
 package ganymedes01.thaumcraftgates.triggers;
 
 import ganymedes01.thaumcraftgates.lib.Reference;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraftforge.common.ForgeDirection;
@@ -64,29 +59,22 @@ public class AspectAmountTrigger implements ITrigger {
 
 	@Override
 	public boolean isTriggerActive(ForgeDirection side, TileEntity tile, ITriggerParameter parameter) {
-		if (tile instanceof IAspectContainer) {
-			IAspectContainer source = (IAspectContainer) tile;
-			AspectList aspects = source.getAspects();
+		if (tile != null && tile instanceof IAspectContainer) {
+			AspectList aspects = ((IAspectContainer) tile).getAspects();
 			if (aspects != null) {
 				Aspect aspect = aspects.getAspectsSortedAmount()[0];
-				if (parameter != null) {
-					ItemStack paramStack = parameter.getItemStack();
-					if (paramStack != null) {
-						Item paramItem = paramStack.getItem();
-						if (paramItem instanceof IEssentiaContainerItem) {
-							aspects = ((IEssentiaContainerItem) paramItem).getAspects(paramStack);
-							if (aspects != null) {
-								for (int i = 0; i < aspects.size(); i++)
-									Logger.getLogger(Reference.MOD_ID).log(Level.WARNING, aspects.getAspects()[0].toString());
-								if (aspects != null)
-									aspect = aspects.getAspectsSortedAmount()[0];
-							}
-						}
+
+				// If trigger has a parameter
+				if (parameter != null && parameter.getItemStack() != null) {
+					Item paramItem = parameter.getItemStack().getItem();
+					if (paramItem != null && paramItem instanceof IEssentiaContainerItem) {
+						AspectList itemAspects = ((IEssentiaContainerItem) paramItem).getAspects(parameter.getItemStack());
+						if (itemAspects != null)
+							aspect = itemAspects.getAspectsSortedAmount()[0];
 					}
 				}
 
-				if (aspects != null)
-					return testAspect(aspects, aspect, amount);
+				return testAspect(aspects, aspect, amount);
 			}
 		}
 		return false;
