@@ -4,6 +4,7 @@ import ganymedes01.thaumcraftgates.lib.Reference;
 import ganymedes01.thaumcraftgates.pipes.ThaumiumPipe;
 import ganymedes01.thaumcraftgates.research.ResearchPipe;
 import ganymedes01.thaumcraftgates.triggers.AspectAmountTrigger;
+import ganymedes01.thaumcraftgates.triggers.FullWandTrigger;
 import ganymedes01.thaumcraftgates.triggers.TriggerProvider;
 
 import java.io.File;
@@ -58,6 +59,7 @@ public class ThaumcraftGates {
 	public static ITrigger aspectTrigger16 = new AspectAmountTrigger(16);
 	public static ITrigger aspectTrigger08 = new AspectAmountTrigger(8);
 	public static ITrigger aspectTriggerMinus8 = new AspectAmountTrigger(-8);
+	public static ITrigger fullWandTrigger = new FullWandTrigger();
 
 	public static Item thaumiumPipe;
 	private static int thaumiumPipeID;
@@ -100,6 +102,8 @@ public class ThaumcraftGates {
 		ActionManager.registerTrigger(aspectTrigger16);
 		ActionManager.registerTrigger(aspectTrigger32);
 		ActionManager.registerTrigger(aspectTrigger64);
+		ActionManager.registerTrigger(fullWandTrigger);
+
 		ActionManager.registerTriggerProvider(new TriggerProvider());
 	}
 
