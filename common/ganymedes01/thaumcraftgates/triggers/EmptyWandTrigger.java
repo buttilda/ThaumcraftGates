@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraftforge.common.ForgeDirection;
+import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.common.items.wands.ItemWandCasting;
 import thaumcraft.common.tiles.TileWandPedestal;
@@ -21,14 +22,14 @@ import cpw.mods.fml.relauncher.SideOnly;
  * 
  */
 
-public class FullWandTrigger implements ITrigger {
+public class EmptyWandTrigger implements ITrigger {
 
 	@SideOnly(Side.CLIENT)
 	private Icon icon;
 
 	@Override
 	public String getUniqueTag() {
-		return Reference.MOD_ID + ".fullWandTrigger";
+		return Reference.MOD_ID + ".emptyWandTrigger";
 	}
 
 	@Override
@@ -38,12 +39,12 @@ public class FullWandTrigger implements ITrigger {
 
 	@Override
 	public void registerIcons(IconRegister reg) {
-		icon = reg.registerIcon(Reference.MOD_ID + ":triggers/fullWand");
+		icon = reg.registerIcon(Reference.MOD_ID + ":triggers/emptyWand");
 	}
 
 	@Override
 	public String getDescription() {
-		return "Wand is Fully Charged";
+		return "Wand is Empty";
 	}
 
 	@Override
@@ -53,9 +54,15 @@ public class FullWandTrigger implements ITrigger {
 			ItemStack stack = pedestal.func_70301_a(0);
 			if (stack != null && stack.getItem() instanceof ItemWandCasting) {
 				ItemWandCasting wand = (ItemWandCasting) stack.getItem();
-				AspectList aspects = wand.getAspectsWithRoom(stack);
-				if (aspects != null)
-					return aspects.size() == 0;
+				AspectList aspects = wand.getAllVis(stack);
+				if (aspects != null) {
+					for (Aspect aspect : aspects.getAspects())
+						if (wand.getVis(stack, aspect) <= 0)
+							continue;
+						else
+							return false;
+					return true;
+				}
 			}
 		}
 		return false;

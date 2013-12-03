@@ -4,6 +4,7 @@ import ganymedes01.thaumcraftgates.lib.Reference;
 import ganymedes01.thaumcraftgates.pipes.ThaumiumPipe;
 import ganymedes01.thaumcraftgates.research.ResearchPipe;
 import ganymedes01.thaumcraftgates.triggers.AspectAmountTrigger;
+import ganymedes01.thaumcraftgates.triggers.EmptyWandTrigger;
 import ganymedes01.thaumcraftgates.triggers.FullWandTrigger;
 import ganymedes01.thaumcraftgates.triggers.TriggerProvider;
 
@@ -60,6 +61,7 @@ public class ThaumcraftGates {
 	public static ITrigger aspectTrigger08 = new AspectAmountTrigger(8);
 	public static ITrigger aspectTriggerMinus8 = new AspectAmountTrigger(-8);
 	public static ITrigger fullWandTrigger = new FullWandTrigger();
+	public static ITrigger emptyWandTrigger = new EmptyWandTrigger();
 
 	public static Item thaumiumPipe;
 	private static int thaumiumPipeID;
@@ -103,6 +105,7 @@ public class ThaumcraftGates {
 		ActionManager.registerTrigger(aspectTrigger32);
 		ActionManager.registerTrigger(aspectTrigger64);
 		ActionManager.registerTrigger(fullWandTrigger);
+		ActionManager.registerTrigger(emptyWandTrigger);
 
 		ActionManager.registerTriggerProvider(new TriggerProvider());
 	}
@@ -129,6 +132,8 @@ public class ThaumcraftGates {
 			aspectTrigger16.registerIcons(evt.map);
 			aspectTrigger08.registerIcons(evt.map);
 			aspectTriggerMinus8.registerIcons(evt.map);
+			fullWandTrigger.registerIcons(evt.map);
+			emptyWandTrigger.registerIcons(evt.map);
 		} else if (evt.map.textureType == 0)
 			ThaumiumPipe.registerIcons(evt.map);
 	}

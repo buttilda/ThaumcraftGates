@@ -40,8 +40,10 @@ public class TriggerProvider implements ITriggerProvider {
 			list.add(ThaumcraftGates.aspectTrigger64);
 		}
 
-		if (tile instanceof TileWandPedestal)
+		if (tile instanceof TileWandPedestal) {
 			list.add(ThaumcraftGates.fullWandTrigger);
+			list.add(ThaumcraftGates.emptyWandTrigger);
+		}
 
 		return list;
 	}
