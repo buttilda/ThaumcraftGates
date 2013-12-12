@@ -1,6 +1,7 @@
 package ganymedes01.thaumcraftgates;
 
 import ganymedes01.thaumcraftgates.lib.Reference;
+import ganymedes01.thaumcraftgates.pipes.ItemThaumiumPipe;
 import ganymedes01.thaumcraftgates.pipes.ThaumiumPipe;
 import ganymedes01.thaumcraftgates.research.ResearchPipe;
 import ganymedes01.thaumcraftgates.triggers.AspectAmountTrigger;
@@ -27,8 +28,9 @@ import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.ConfigResearch;
 import buildcraft.api.gates.ActionManager;
 import buildcraft.api.gates.ITrigger;
-import buildcraft.core.utils.Localization;
 import buildcraft.transport.BlockGenericPipe;
+import buildcraft.transport.Pipe;
+import buildcraft.transport.TransportProxy;
 import buildcraft.transport.TransportProxyClient;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
@@ -38,6 +40,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -84,16 +87,29 @@ public class ThaumcraftGates {
 			config.save();
 		}
 
-		// Load BuildCraft localizations
-		Localization.addLocalization("/assets/thaumcraftgates/lang/", "en_US");
-
 		// Create and register Pipe
-		thaumiumPipe = BlockGenericPipe.registerPipe(thaumiumPipeID, ThaumiumPipe.class);
+		thaumiumPipe = registerPipe(thaumiumPipeID, ThaumiumPipe.class);
 		thaumiumPipe.setCreativeTab(Thaumcraft.tabTC);
 
 		// Register pipe renderer
 		if (event.getSide() == Side.CLIENT)
 			MinecraftForgeClient.registerItemRenderer(thaumiumPipe.itemID, TransportProxyClient.pipeItemRenderer);
+	}
+
+	private ItemThaumiumPipe registerPipe(int key, Class<? extends Pipe> clas) {
+		ItemThaumiumPipe item = new ItemThaumiumPipe(key);
+		item.setUnlocalizedName(Reference.MOD_ID + ".thaumiumPipe");
+
+		GameRegistry.registerItem(item, item.getUnlocalizedName());
+
+		BlockGenericPipe.pipes.put(item.itemID, clas);
+
+		Pipe dummyPipe = BlockGenericPipe.createPipe(item.itemID);
+		if (dummyPipe != null) {
+			item.setPipeIconIndex(dummyPipe.getIconIndexForItem());
+			TransportProxy.proxy.setIconProviderFromPipe(item, dummyPipe);
+		}
+		return item;
 	}
 
 	@EventHandler
