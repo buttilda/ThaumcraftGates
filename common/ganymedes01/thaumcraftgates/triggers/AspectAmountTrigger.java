@@ -33,7 +33,7 @@ public class AspectAmountTrigger implements ITrigger {
 
 	public AspectAmountTrigger(int amount) {
 		uniqueTag = Reference.MOD_ID + ":" + "aspectTrigger" + amount;
-		description = "Aspect " + (amount > 0 ? ">= " : "< ") + Math.abs(amount);
+		description = "Aspect " + (amount > 0 ? ">= " : amount < 0 ? "<= " : "= ") + Math.abs(amount);
 		this.amount = amount;
 	}
 
@@ -81,7 +81,7 @@ public class AspectAmountTrigger implements ITrigger {
 	}
 
 	private boolean testAspect(AspectList aspects, Aspect aspect, int amount) {
-		return amount > 0 ? aspects.getAmount(aspect) >= amount : aspects.getAmount(aspect) < Math.abs(amount);
+		return amount > 0 ? aspects.getAmount(aspect) >= amount : aspects.getAmount(aspect) <= Math.abs(amount);
 	}
 
 	@Override

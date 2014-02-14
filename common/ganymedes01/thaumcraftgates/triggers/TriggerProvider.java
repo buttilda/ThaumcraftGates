@@ -24,16 +24,12 @@ import buildcraft.api.transport.IPipe;
 public class TriggerProvider implements ITriggerProvider {
 
 	@Override
-	public LinkedList<ITrigger> getPipeTriggers(IPipe pipe) {
-		return null;
-	}
-
-	@Override
 	public LinkedList<ITrigger> getNeighborTriggers(Block block, TileEntity tile) {
 		LinkedList<ITrigger> list = new LinkedList<ITrigger>();
 
 		if (tile != null && tile instanceof IAspectContainer && !(tile instanceof IInventory) && !(tile instanceof IFluidHandler)) {
 			list.add(ThaumcraftGates.aspectTriggerMinus8);
+			list.add(ThaumcraftGates.aspectTrigger00);
 			list.add(ThaumcraftGates.aspectTrigger08);
 			list.add(ThaumcraftGates.aspectTrigger16);
 			list.add(ThaumcraftGates.aspectTrigger32);
@@ -46,5 +42,10 @@ public class TriggerProvider implements ITriggerProvider {
 		}
 
 		return list;
+	}
+
+	@Override
+	public LinkedList<ITrigger> getPipeTriggers(IPipe pipe) {
+		return null;
 	}
 }

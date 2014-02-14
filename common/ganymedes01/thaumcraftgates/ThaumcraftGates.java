@@ -1,7 +1,6 @@
 package ganymedes01.thaumcraftgates;
 
 import ganymedes01.thaumcraftgates.lib.Reference;
-import ganymedes01.thaumcraftgates.pipes.ItemThaumiumPipe;
 import ganymedes01.thaumcraftgates.pipes.ThaumiumPipe;
 import ganymedes01.thaumcraftgates.research.ResearchPipe;
 import ganymedes01.thaumcraftgates.triggers.AspectAmountTrigger;
@@ -26,11 +25,10 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.ConfigResearch;
+import buildcraft.BuildCraftTransport;
 import buildcraft.api.gates.ActionManager;
 import buildcraft.api.gates.ITrigger;
-import buildcraft.transport.BlockGenericPipe;
-import buildcraft.transport.Pipe;
-import buildcraft.transport.TransportProxy;
+import buildcraft.core.utils.Localization;
 import buildcraft.transport.TransportProxyClient;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
@@ -40,7 +38,6 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
-import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -52,7 +49,7 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION_NUMBER, dependencies = Reference.DEPENDENCIES)
-@NetworkMod(channels = { Reference.CHANNEL_NAME }, clientSideRequired = true, serverSideRequired = true)
+@NetworkMod(clientSideRequired = true, serverSideRequired = true)
 public class ThaumcraftGates {
 
 	@Instance(Reference.MOD_ID)
@@ -62,6 +59,7 @@ public class ThaumcraftGates {
 	public static ITrigger aspectTrigger32 = new AspectAmountTrigger(32);
 	public static ITrigger aspectTrigger16 = new AspectAmountTrigger(16);
 	public static ITrigger aspectTrigger08 = new AspectAmountTrigger(8);
+	public static ITrigger aspectTrigger00 = new AspectAmountTrigger(0);
 	public static ITrigger aspectTriggerMinus8 = new AspectAmountTrigger(-8);
 	public static ITrigger fullWandTrigger = new FullWandTrigger();
 	public static ITrigger emptyWandTrigger = new EmptyWandTrigger();
@@ -72,6 +70,8 @@ public class ThaumcraftGates {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(this);
+
+		Localization.addLocalization("/assets/thaumcraftgates/lang/", "en_US");
 
 		// Load ID config file
 		Configuration config = new Configuration(new File(event.getModConfigurationDirectory().getAbsolutePath() + File.separator + Reference.MOD_ID + ".cfg"));
@@ -88,7 +88,8 @@ public class ThaumcraftGates {
 		}
 
 		// Create and register Pipe
-		thaumiumPipe = registerPipe(thaumiumPipeID, ThaumiumPipe.class);
+		thaumiumPipe = BuildCraftTransport.buildPipe(thaumiumPipeID, ThaumiumPipe.class, "");
+		thaumiumPipe.setUnlocalizedName(Reference.MOD_ID + ".thaumiumPipe.name");
 		thaumiumPipe.setCreativeTab(Thaumcraft.tabTC);
 
 		// Register pipe renderer
@@ -96,26 +97,11 @@ public class ThaumcraftGates {
 			MinecraftForgeClient.registerItemRenderer(thaumiumPipe.itemID, TransportProxyClient.pipeItemRenderer);
 	}
 
-	private ItemThaumiumPipe registerPipe(int key, Class<? extends Pipe> clas) {
-		ItemThaumiumPipe item = new ItemThaumiumPipe(key);
-		item.setUnlocalizedName(Reference.MOD_ID + ".thaumiumPipe");
-
-		GameRegistry.registerItem(item, item.getUnlocalizedName());
-
-		BlockGenericPipe.pipes.put(item.itemID, clas);
-
-		Pipe dummyPipe = BlockGenericPipe.createPipe(item.itemID);
-		if (dummyPipe != null) {
-			item.setPipeIconIndex(dummyPipe.getIconIndexForItem());
-			TransportProxy.proxy.setIconProviderFromPipe(item, dummyPipe);
-		}
-		return item;
-	}
-
 	@EventHandler
 	public void load(FMLInitializationEvent event) {
 		// Register BuildCraft triggers
 		ActionManager.registerTrigger(aspectTriggerMinus8);
+		ActionManager.registerTrigger(aspectTrigger00);
 		ActionManager.registerTrigger(aspectTrigger08);
 		ActionManager.registerTrigger(aspectTrigger16);
 		ActionManager.registerTrigger(aspectTrigger32);
