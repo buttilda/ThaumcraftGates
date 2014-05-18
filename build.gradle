@@ -27,7 +27,6 @@ minecraft {
 }
 
 dependencies {
-	compile files("IC2.jar")
 	compile files("Thaumcraft.jar")
 }
 
