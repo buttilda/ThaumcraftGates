@@ -1,15 +1,16 @@
 package ganymedes01.thaumcraftgates.triggers;
 
 import ganymedes01.thaumcraftgates.lib.Reference;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Icon;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraft.util.IIcon;
+import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.common.items.wands.ItemWandCasting;
 import thaumcraft.common.tiles.TileWandPedestal;
+import buildcraft.api.gates.ITileTrigger;
 import buildcraft.api.gates.ITrigger;
 import buildcraft.api.gates.ITriggerParameter;
 import cpw.mods.fml.relauncher.Side;
@@ -22,23 +23,23 @@ import cpw.mods.fml.relauncher.SideOnly;
  * 
  */
 
-public class EmptyWandTrigger implements ITrigger {
+public class EmptyWandTrigger implements ITileTrigger {
 
 	@SideOnly(Side.CLIENT)
-	private Icon icon;
+	private IIcon icon;
 
 	@Override
 	public String getUniqueTag() {
-		return Reference.MOD_ID + ".emptyWandTrigger";
+		return Reference.MOD_ID + ":emptyWandTrigger";
 	}
 
 	@Override
-	public Icon getIcon() {
+	public IIcon getIcon() {
 		return icon;
 	}
 
 	@Override
-	public void registerIcons(IconRegister reg) {
+	public void registerIcons(IIconRegister reg) {
 		icon = reg.registerIcon(Reference.MOD_ID + ":triggers/emptyWand");
 	}
 
@@ -84,7 +85,7 @@ public class EmptyWandTrigger implements ITrigger {
 	}
 
 	@Override
-	public int getLegacyId() {
-		return 0;
+	public ITrigger rotateLeft() {
+		return this;
 	}
 }

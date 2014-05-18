@@ -12,7 +12,7 @@ import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.common.tiles.TileWandPedestal;
 import buildcraft.api.gates.ITrigger;
 import buildcraft.api.gates.ITriggerProvider;
-import buildcraft.api.transport.IPipe;
+import buildcraft.api.transport.IPipeTile;
 
 /**
  * Thaumcraft Gates
@@ -45,7 +45,7 @@ public class TriggerProvider implements ITriggerProvider {
 	}
 
 	@Override
-	public LinkedList<ITrigger> getPipeTriggers(IPipe pipe) {
+	public LinkedList<ITrigger> getPipeTriggers(IPipeTile pipe) {
 		return null;
 	}
 }

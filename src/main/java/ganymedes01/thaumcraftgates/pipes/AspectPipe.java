@@ -2,7 +2,7 @@ package ganymedes01.thaumcraftgates.pipes;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.IFluidHandler;
 import thaumcraft.api.aspects.IAspectContainer;
 import buildcraft.transport.PipeTransportStructure;

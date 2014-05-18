@@ -1,9 +1,10 @@
 package ganymedes01.thaumcraftgates.pipes;
 
 import ganymedes01.thaumcraftgates.lib.Reference;
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.util.Icon;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.item.Item;
+import net.minecraft.util.IIcon;
+import net.minecraftforge.common.util.ForgeDirection;
 import buildcraft.api.core.IIconProvider;
 import buildcraft.transport.Pipe;
 import buildcraft.transport.PipeIconProvider;
@@ -17,13 +18,15 @@ import cpw.mods.fml.relauncher.SideOnly;
  * 
  */
 
+@SuppressWarnings("rawtypes")
 public class ThaumiumPipe extends Pipe {
 
 	@SideOnly(Side.CLIENT)
-	private static Icon icon;
+	private static IIcon icon;
 
-	public ThaumiumPipe(int itemID) {
-		super(new AspectPipe(), itemID);
+	@SuppressWarnings("unchecked")
+	public ThaumiumPipe(Item item) {
+		super(new AspectPipe(), item);
 	}
 
 	@Override
@@ -33,7 +36,7 @@ public class ThaumiumPipe extends Pipe {
 
 			@Override
 			@SideOnly(Side.CLIENT)
-			public Icon getIcon(int pipeIconIndex) {
+			public IIcon getIcon(int pipeIconIndex) {
 				return ThaumiumPipe.icon;
 			}
 		};
@@ -45,7 +48,7 @@ public class ThaumiumPipe extends Pipe {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public static void registerIcons(IconRegister reg) {
+	public static void registerIcons(IIconRegister reg) {
 		icon = reg.registerIcon(Reference.MOD_ID + ":" + "thaumiumPipe");
 	}
 }

@@ -22,7 +22,6 @@ public class ResearchPipe extends ResearchItem {
 		super("THAUMIUM_PIPE", "ALCHEMY", new AspectList().add(Aspect.METAL, 2).add(Aspect.MAGIC, 1).add(Aspect.MECHANISM, 1), 4, 4, 3, new ItemStack(ThaumcraftGates.thaumiumPipe));
 		setPages(new ResearchPage[] { new ResearchPage("tc.research_page.THAUMIUM_PIPE"), new ResearchPage((ShapedArcaneRecipe) ConfigResearch.recipes.get("THAUMIUM_PIPE")) });
 		setParents(new String[] { "TUBES", "THAUMIUM" });
-		setConcealed();
 		registerResearchItem();
 	}
 }
