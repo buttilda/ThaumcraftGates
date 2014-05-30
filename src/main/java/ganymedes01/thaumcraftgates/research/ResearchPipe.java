@@ -23,5 +23,6 @@ public class ResearchPipe extends ResearchItem {
 		setPages(new ResearchPage[] { new ResearchPage("tc.research_page.THAUMIUM_PIPE"), new ResearchPage((ShapedArcaneRecipe) ConfigResearch.recipes.get("THAUMIUM_PIPE")) });
 		setParents(new String[] { "TUBES", "THAUMIUM" });
 		registerResearchItem();
+		setHidden();
 	}
 }
