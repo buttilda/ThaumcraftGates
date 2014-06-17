@@ -16,9 +16,9 @@ import buildcraft.api.transport.IPipeTile;
 
 /**
  * Thaumcraft Gates
- * 
+ *
  * @author ganymedes01
- * 
+ *
  */
 
 public class TriggerProvider implements ITriggerProvider {
@@ -40,7 +40,6 @@ public class TriggerProvider implements ITriggerProvider {
 			list.add(ThaumcraftGates.fullWandTrigger);
 			list.add(ThaumcraftGates.emptyWandTrigger);
 		}
-
 		return list;
 	}
 

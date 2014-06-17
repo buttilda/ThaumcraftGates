@@ -20,8 +20,8 @@ import thaumcraft.api.aspects.AspectList;
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.ConfigResearch;
 import buildcraft.BuildCraftTransport;
-import buildcraft.api.gates.ActionManager;
 import buildcraft.api.gates.ITrigger;
+import buildcraft.api.gates.StatementManager;
 import buildcraft.core.CreativeTabBuildCraft;
 import buildcraft.transport.TransportProxyClient;
 import cpw.mods.fml.common.Mod;
@@ -36,9 +36,9 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * Thaumcraft Gates
- * 
+ *
  * @author ganymedes01
- * 
+ *
  */
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION_NUMBER, dependencies = Reference.DEPENDENCIES)
@@ -75,16 +75,7 @@ public class ThaumcraftGates {
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		// Register BuildCraft triggers
-		ActionManager.registerTrigger(aspectTriggerMinus8);
-		ActionManager.registerTrigger(aspectTrigger00);
-		ActionManager.registerTrigger(aspectTrigger08);
-		ActionManager.registerTrigger(aspectTrigger16);
-		ActionManager.registerTrigger(aspectTrigger32);
-		ActionManager.registerTrigger(aspectTrigger64);
-		ActionManager.registerTrigger(fullWandTrigger);
-		ActionManager.registerTrigger(emptyWandTrigger);
-
-		ActionManager.registerTriggerProvider(new TriggerProvider());
+		StatementManager.registerTriggerProvider(new TriggerProvider());
 	}
 
 	@EventHandler

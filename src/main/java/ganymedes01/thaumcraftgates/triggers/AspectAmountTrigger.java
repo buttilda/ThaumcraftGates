@@ -10,21 +10,21 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aspects.IEssentiaContainerItem;
-import buildcraft.api.gates.ITileTrigger;
+import buildcraft.api.gates.IGate;
 import buildcraft.api.gates.ITrigger;
 import buildcraft.api.gates.ITriggerParameter;
-import buildcraft.api.gates.TriggerParameter;
+import buildcraft.api.gates.TriggerParameterItemStack;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * Thaumcraft Gates
- * 
+ *
  * @author ganymedes01
- * 
+ *
  */
 
-public class AspectAmountTrigger implements ITileTrigger {
+public class AspectAmountTrigger implements ITrigger {
 
 	@SideOnly(Side.CLIENT)
 	private IIcon icon;
@@ -59,23 +59,32 @@ public class AspectAmountTrigger implements ITileTrigger {
 	}
 
 	@Override
-	public boolean isTriggerActive(ForgeDirection side, TileEntity tile, ITriggerParameter parameter) {
-		if (tile != null && tile instanceof IAspectContainer) {
-			AspectList aspects = ((IAspectContainer) tile).getAspects();
-			if (aspects != null) {
-				Aspect aspect = aspects.getAspectsSortedAmount()[0];
+	public boolean isTriggerActive(IGate gate, ITriggerParameter[] parameters) {
+		for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
+			TileEntity tile = gate.getPipe().getAdjacentTile(dir);
+			if (tile != null && tile instanceof IAspectContainer) {
+				AspectList aspects = ((IAspectContainer) tile).getAspects();
+				if (aspects != null) {
+					Aspect aspect = aspects.getAspectsSortedAmount()[0];
 
-				// If trigger has a parameter
-				if (parameter != null && parameter.getItemStack() != null) {
-					Item paramItem = parameter.getItemStack().getItem();
-					if (paramItem != null && paramItem instanceof IEssentiaContainerItem) {
-						AspectList itemAspects = ((IEssentiaContainerItem) paramItem).getAspects(parameter.getItemStack());
-						if (itemAspects != null)
-							aspect = itemAspects.getAspectsSortedAmount()[0];
+					// If trigger has a parameter
+					if (parameters != null && parameters.length > 0) {
+						ITriggerParameter par = parameters[0];
+						if (par instanceof TriggerParameterItemStack) {
+							TriggerParameterItemStack parameter = (TriggerParameterItemStack) par;
+							if (parameter != null && parameter.getItemStackToDraw() != null) {
+								Item paramItem = parameter.getItemStackToDraw().getItem();
+								if (paramItem != null && paramItem instanceof IEssentiaContainerItem) {
+									AspectList itemAspects = ((IEssentiaContainerItem) paramItem).getAspects(parameter.getItemStackToDraw());
+									if (itemAspects != null)
+										aspect = itemAspects.getAspectsSortedAmount()[0];
+								}
+							}
+						}
 					}
-				}
 
-				return testAspect(aspects, aspect, amount);
+					return testAspect(aspects, aspect, amount);
+				}
 			}
 		}
 		return false;
@@ -86,22 +95,22 @@ public class AspectAmountTrigger implements ITileTrigger {
 	}
 
 	@Override
-	public boolean hasParameter() {
-		return true;
-	}
-
-	@Override
-	public boolean requiresParameter() {
-		return false;
-	}
-
-	@Override
-	public ITriggerParameter createParameter() {
-		return new TriggerParameter();
-	}
-
-	@Override
 	public ITrigger rotateLeft() {
 		return this;
+	}
+
+	@Override
+	public int maxParameters() {
+		return 1;
+	}
+
+	@Override
+	public int minParameters() {
+		return 0;
+	}
+
+	@Override
+	public ITriggerParameter createParameter(int index) {
+		return new TriggerParameterItemStack();
 	}
 }
