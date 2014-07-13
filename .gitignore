@@ -1,7 +1,6 @@
 /bin
 .DS_Store
 .settings/
-/build
+build
+/libs
 .gradle
-Thaumcraft.jar
-BuildCraft.jar
