@@ -1,4 +1,4 @@
 tc.research_name.THAUMIUM_PIPE=Thaumium Pipe
 tc.research_text.THAUMIUM_PIPE=When technology and magic work together
 tc.research_page.THAUMIUM_PIPE=This pipe cannot be used as a normal BuildCraft pipe, it will not transport items, fluids or energy. It does not transport anything as a matter of fact. But its uses are plenty!<BR>This pipe connects only to aspect containers. It cannot pull the aspects out, but it allows you to measure them using gates. If the container has more than one aspect, the pipe will measure the most abundant one. Or, you can force the pipe to measure a specific aspect by setting a filter. Placing any aspect container items on the filter will force the pipe to measure only the aspect present in that item and ignore all others.
-item.thaumcraftgates.thaumiumPipe=Thaumium Pipe
+item.thaumcraftgates.thaumiumPipe.name=Thaumium Pipe

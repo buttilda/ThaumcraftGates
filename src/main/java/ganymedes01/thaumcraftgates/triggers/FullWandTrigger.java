@@ -13,6 +13,7 @@ import buildcraft.api.gates.IGate;
 import buildcraft.api.gates.IStatementParameter;
 import buildcraft.api.gates.ITrigger;
 import buildcraft.api.gates.ITriggerParameter;
+import buildcraft.api.gates.StatementManager;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -27,10 +28,15 @@ public class FullWandTrigger implements ITrigger {
 
 	@SideOnly(Side.CLIENT)
 	private IIcon icon;
+	private final String uniqueTag = Reference.MOD_ID + ":fullWandTrigger";
+
+	public FullWandTrigger() {
+		StatementManager.statements.put(uniqueTag, this);
+	}
 
 	@Override
 	public String getUniqueTag() {
-		return Reference.MOD_ID + ":fullWandTrigger";
+		return uniqueTag;
 	}
 
 	@Override

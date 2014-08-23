@@ -13,6 +13,7 @@ import thaumcraft.api.aspects.IEssentiaContainerItem;
 import buildcraft.api.gates.IGate;
 import buildcraft.api.gates.ITrigger;
 import buildcraft.api.gates.ITriggerParameter;
+import buildcraft.api.gates.StatementManager;
 import buildcraft.api.gates.TriggerParameterItemStack;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -36,6 +37,8 @@ public class AspectAmountTrigger implements ITrigger {
 		uniqueTag = Reference.MOD_ID + ":" + "aspectTrigger" + amount;
 		description = "Aspect " + (amount > 0 ? ">= " : amount < 0 ? "<= " : "= ") + Math.abs(amount);
 		this.amount = amount;
+
+		StatementManager.statements.put(uniqueTag, this);
 	}
 
 	@Override
