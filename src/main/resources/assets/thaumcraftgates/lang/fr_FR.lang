@@ -1,0 +1,4 @@
+tc.research_name.THAUMIUM_PIPE=Tuyau en Thaumium
+tc.research_text.THAUMIUM_PIPE=Quand la technologie et la magie s'associent
+tc.research_page.THAUMIUM_PIPE=Ce tuyau ne peut pas être utilisé comme un tuyau BuildCraft normal, il ne tranportera aucun(e) objet, fluide ou énergie. Il ne transportera rien en fait. Mais ses fonctions sont nombreuses!<BR>Ce tuyau ne se connectera qu'un containeur à aspects. Il ne pourr pas en extraire les aspects mais vous permettra de les mesurer avec une porte. Si le containeur a plus d'un aspect, le tuyau mesurera le plus abondant. Ou, vous pouvez forcer le tuyau à mesurer un aspect spécifique en lui imposant un filtre. Placer n'importe lequel des objects containeurs sur le filtre forcera le tuyau à mesurer uniquement l'aspect présent dans cet objet et il ignorera tous les autres.
+item.thaumcraftgates.thaumiumPipe.name=Tuyau en Thaumium
