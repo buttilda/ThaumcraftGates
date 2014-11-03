@@ -1,50 +1,66 @@
 package ganymedes01.thaumcraftgates.triggers;
 
-import ganymedes01.thaumcraftgates.ThaumcraftGates;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-import java.util.LinkedList;
-
-import net.minecraft.block.Block;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.common.tiles.TileWandPedestal;
-import buildcraft.api.gates.ITrigger;
-import buildcraft.api.gates.ITriggerProvider;
-import buildcraft.api.transport.IPipeTile;
-
-/**
- * Thaumcraft Gates
- *
- * @author ganymedes01
- *
- */
+import buildcraft.api.statements.IStatementContainer;
+import buildcraft.api.statements.ITriggerExternal;
+import buildcraft.api.statements.ITriggerInternal;
+import buildcraft.api.statements.ITriggerProvider;
+import buildcraft.api.statements.StatementManager;
 
 public class TriggerProvider implements ITriggerProvider {
 
-	@Override
-	public LinkedList<ITrigger> getNeighborTriggers(Block block, TileEntity tile) {
-		LinkedList<ITrigger> list = new LinkedList<ITrigger>();
+	public static ITriggerExternal aspectTrigger64 = new AspectAmountTrigger(64);
+	public static ITriggerExternal aspectTrigger32 = new AspectAmountTrigger(32);
+	public static ITriggerExternal aspectTrigger16 = new AspectAmountTrigger(16);
+	public static ITriggerExternal aspectTrigger08 = new AspectAmountTrigger(8);
+	public static ITriggerExternal aspectTrigger00 = new AspectAmountTrigger(0);
+	public static ITriggerExternal aspectTriggerMinus8 = new AspectAmountTrigger(-8);
 
-		if (tile != null && tile instanceof IAspectContainer && !(tile instanceof IInventory) && !(tile instanceof IFluidHandler)) {
-			list.add(ThaumcraftGates.aspectTriggerMinus8);
-			list.add(ThaumcraftGates.aspectTrigger00);
-			list.add(ThaumcraftGates.aspectTrigger08);
-			list.add(ThaumcraftGates.aspectTrigger16);
-			list.add(ThaumcraftGates.aspectTrigger32);
-			list.add(ThaumcraftGates.aspectTrigger64);
-		}
+	public static ITriggerExternal fullWandTrigger = new FullWandTrigger();
+	public static ITriggerExternal emptyWandTrigger = new EmptyWandTrigger();
 
-		if (tile instanceof TileWandPedestal) {
-			list.add(ThaumcraftGates.fullWandTrigger);
-			list.add(ThaumcraftGates.emptyWandTrigger);
-		}
-		return list;
+	public TriggerProvider() {
+		StatementManager.registerStatement(aspectTrigger64);
+		StatementManager.registerStatement(aspectTrigger32);
+		StatementManager.registerStatement(aspectTrigger16);
+		StatementManager.registerStatement(aspectTrigger08);
+		StatementManager.registerStatement(aspectTrigger00);
+		StatementManager.registerStatement(aspectTriggerMinus8);
+
+		StatementManager.registerStatement(fullWandTrigger);
+		StatementManager.registerStatement(emptyWandTrigger);
+
+		StatementManager.registerTriggerProvider(this);
 	}
 
 	@Override
-	public LinkedList<ITrigger> getPipeTriggers(IPipeTile pipe) {
+	public Collection<ITriggerInternal> getInternalTriggers(IStatementContainer container) {
 		return null;
+	}
+
+	@Override
+	public Collection<ITriggerExternal> getExternalTriggers(ForgeDirection side, TileEntity tile) {
+		List<ITriggerExternal> list = new ArrayList<ITriggerExternal>();
+
+		if (tile instanceof TileWandPedestal) {
+			list.add(fullWandTrigger);
+			list.add(emptyWandTrigger);
+		} else if (tile instanceof IAspectContainer) {
+			list.add(aspectTriggerMinus8);
+			list.add(aspectTrigger00);
+			list.add(aspectTrigger08);
+			list.add(aspectTrigger16);
+			list.add(aspectTrigger32);
+			list.add(aspectTrigger64);
+		}
+
+		return list;
 	}
 }

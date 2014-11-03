@@ -11,13 +11,6 @@ import buildcraft.transport.PipeIconProvider;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-/**
- * Thaumcraft Gates
- * 
- * @author ganymedes01
- * 
- */
-
 @SuppressWarnings("rawtypes")
 public class ThaumiumPipe extends Pipe {
 

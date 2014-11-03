@@ -2,21 +2,16 @@ package ganymedes01.thaumcraftgates.triggers;
 
 import ganymedes01.thaumcraftgates.lib.Reference;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
 import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aspects.IEssentiaContainerItem;
-import buildcraft.api.gates.IGate;
-import buildcraft.api.gates.ITrigger;
-import buildcraft.api.gates.ITriggerParameter;
-import buildcraft.api.gates.StatementManager;
-import buildcraft.api.gates.TriggerParameterItemStack;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import buildcraft.api.statements.IStatementContainer;
+import buildcraft.api.statements.IStatementParameter;
+import buildcraft.api.statements.StatementParameterItemStack;
 
 /**
  * Thaumcraft Gates
@@ -25,30 +20,13 @@ import cpw.mods.fml.relauncher.SideOnly;
  *
  */
 
-public class AspectAmountTrigger implements ITrigger {
+public class AspectAmountTrigger extends StatementBase {
 
-	@SideOnly(Side.CLIENT)
-	private IIcon icon;
-
-	private final String uniqueTag, description;
 	private final int amount;
 
 	public AspectAmountTrigger(int amount) {
-		uniqueTag = Reference.MOD_ID + ":" + "aspectTrigger" + amount;
-		description = "Aspect " + (amount > 0 ? ">= " : amount < 0 ? "<= " : "= ") + Math.abs(amount);
+		super(Reference.MOD_ID + ":" + "aspectTrigger" + amount, "Aspect " + (amount > 0 ? ">= " : amount < 0 ? "<= " : "= ") + Math.abs(amount));
 		this.amount = amount;
-
-		StatementManager.statements.put(uniqueTag, this);
-	}
-
-	@Override
-	public String getUniqueTag() {
-		return uniqueTag;
-	}
-
-	@Override
-	public IIcon getIcon() {
-		return icon;
 	}
 
 	@Override
@@ -57,37 +35,29 @@ public class AspectAmountTrigger implements ITrigger {
 	}
 
 	@Override
-	public String getDescription() {
-		return description;
-	}
+	public boolean isTriggerActive(TileEntity target, ForgeDirection side, IStatementContainer source, IStatementParameter[] parameters) {
+		if (target instanceof IAspectContainer) {
+			AspectList aspects = ((IAspectContainer) target).getAspects();
+			if (aspects != null) {
+				Aspect aspect = aspects.getAspectsSortedAmount()[0];
 
-	@Override
-	public boolean isTriggerActive(IGate gate, ITriggerParameter[] parameters) {
-		for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
-			TileEntity tile = gate.getPipe().getAdjacentTile(dir);
-			if (tile != null && tile instanceof IAspectContainer) {
-				AspectList aspects = ((IAspectContainer) tile).getAspects();
-				if (aspects != null) {
-					Aspect aspect = aspects.getAspectsSortedAmount()[0];
-
-					// If trigger has a parameter
-					if (parameters != null && parameters.length > 0) {
-						ITriggerParameter par = parameters[0];
-						if (par instanceof TriggerParameterItemStack) {
-							TriggerParameterItemStack parameter = (TriggerParameterItemStack) par;
-							if (parameter != null && parameter.getItemStackToDraw() != null) {
-								Item paramItem = parameter.getItemStackToDraw().getItem();
-								if (paramItem != null && paramItem instanceof IEssentiaContainerItem) {
-									AspectList itemAspects = ((IEssentiaContainerItem) paramItem).getAspects(parameter.getItemStackToDraw());
-									if (itemAspects != null)
-										aspect = itemAspects.getAspectsSortedAmount()[0];
-								}
+				// If trigger has a parameter
+				if (parameters != null && parameters.length > 0) {
+					IStatementParameter par = parameters[0];
+					if (par instanceof StatementParameterItemStack) {
+						StatementParameterItemStack parameter = (StatementParameterItemStack) par;
+						if (parameter != null && parameter.getItemStack() != null) {
+							ItemStack stack = parameter.getItemStack();
+							if (stack.getItem() instanceof IEssentiaContainerItem) {
+								AspectList itemAspects = ((IEssentiaContainerItem) stack.getItem()).getAspects(stack);
+								if (itemAspects != null)
+									aspect = itemAspects.getAspectsSortedAmount()[0];
 							}
 						}
 					}
-
-					return testAspect(aspects, aspect, amount);
 				}
+
+				return testAspect(aspects, aspect, amount);
 			}
 		}
 		return false;
@@ -98,22 +68,13 @@ public class AspectAmountTrigger implements ITrigger {
 	}
 
 	@Override
-	public ITrigger rotateLeft() {
-		return this;
-	}
-
-	@Override
 	public int maxParameters() {
 		return 1;
 	}
 
 	@Override
-	public int minParameters() {
-		return 0;
+	public IStatementParameter createParameter(int index) {
+		return new StatementParameterItemStack();
 	}
 
-	@Override
-	public ITriggerParameter createParameter(int index) {
-		return new TriggerParameterItemStack();
-	}
 }

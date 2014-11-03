@@ -9,13 +9,6 @@ import thaumcraft.api.research.ResearchItem;
 import thaumcraft.api.research.ResearchPage;
 import thaumcraft.common.config.ConfigResearch;
 
-/**
- * Thaumcraft Gates
- * 
- * @author ganymedes01
- * 
- */
-
 public class ResearchPipe extends ResearchItem {
 
 	public ResearchPipe() {
