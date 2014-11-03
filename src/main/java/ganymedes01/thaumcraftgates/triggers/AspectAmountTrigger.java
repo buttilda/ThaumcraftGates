@@ -13,13 +13,6 @@ import buildcraft.api.statements.IStatementContainer;
 import buildcraft.api.statements.IStatementParameter;
 import buildcraft.api.statements.StatementParameterItemStack;
 
-/**
- * Thaumcraft Gates
- *
- * @author ganymedes01
- *
- */
-
 public class AspectAmountTrigger extends StatementBase {
 
 	private final int amount;
@@ -76,5 +69,4 @@ public class AspectAmountTrigger extends StatementBase {
 	public IStatementParameter createParameter(int index) {
 		return new StatementParameterItemStack();
 	}
-
 }
