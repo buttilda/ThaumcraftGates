@@ -33,9 +33,7 @@ public class EmptyWandTrigger extends StatementBase {
 				AspectList aspects = wand.getAllVis(stack);
 				if (aspects != null) {
 					for (Aspect aspect : aspects.getAspects())
-						if (wand.getVis(stack, aspect) <= 0)
-							continue;
-						else
+						if (wand.getVis(stack, aspect) > 0)
 							return false;
 					return true;
 				}

@@ -28,10 +28,8 @@ public class FullWandTrigger extends StatementBase {
 			TileWandPedestal pedestal = (TileWandPedestal) target;
 			ItemStack stack = pedestal.func_70301_a(0);
 			if (stack != null && stack.getItem() instanceof ItemWandCasting) {
-				ItemWandCasting wand = (ItemWandCasting) stack.getItem();
-				AspectList aspects = wand.getAspectsWithRoom(stack);
-				if (aspects != null)
-					return aspects.size() == 0;
+				AspectList aspects = ((ItemWandCasting) stack.getItem()).getAspectsWithRoom(stack);
+				return aspects != null && aspects.size() == 0;
 			}
 		}
 		return false;
