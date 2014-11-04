@@ -1,4 +1,7 @@
 tc.research_name.THAUMIUM_PIPE=奥法管道
 tc.research_text.THAUMIUM_PIPE=当科技与魔法协作
 tc.research_page.THAUMIUM_PIPE=这种管道无法当做普通的BC管道使用,它无法用来传输物品,流体或者能量.实际上它不能用来传输任何物质.但是它用途也多多！<BR>这种管道只能和要素源质的容器相连.它不能将要素源质吸出来,但你却能够用BC门来控制它.当容器内装有超过一种要素源质时,这种管道会处理其中最多的那种.或者,你可以通过设置过滤强制让管道处理指定类型的源质.将任意装有源质的物品放入过滤器中就能强制管道只处理这种物品内装有的要素而忽略所有其他类型.
+
 item.thaumcraftgates.thaumiumPipe.name=奥法管道
+trigger.thaumcraftgates.wandEmpty=法杖魔力为空
+trigger.thaumcraftgates.wandFull=法杖魔力为满
