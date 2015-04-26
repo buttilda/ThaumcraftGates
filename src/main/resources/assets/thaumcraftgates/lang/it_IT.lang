@@ -1,0 +1,7 @@
+tc.research_name.THAUMIUM_PIPE=Tubo di taumio
+tc.research_text.THAUMIUM_PIPE=Quando tecnologia e magia funzionano insieme
+tc.research_page.THAUMIUM_PIPE=Questo tubo non funziona come un normale tubo di BuildCraft, non trasporta oggetti, fluidi o energia. Proprio niente. Ma ha moltissimi usi!<BR>Questo tubo connette ai conenitori di aspetti. Non può portare aspetti fuori, ma ti permette di misurarli con l'aiuto dei gate. Se il contenitore ha più di un aspetto, misurerà quello di maggiore quantità. Oppure puoi obbligare il tubo a misurare un aspetto specifico con un filtro. mettendo qualunque oggetto contenente aspetti obbligerà il tubo a misurare solo l'aspetto presente in questo e a ignorare gli altri.
+
+item.thaumcraftgates.thaumiumPipe.name=Tubo di taumio
+trigger.thaumcraftgates.wandEmpty=Bacchetta è vuota
+trigger.thaumcraftgates.wandFull=Bacchetta è completamente carica
