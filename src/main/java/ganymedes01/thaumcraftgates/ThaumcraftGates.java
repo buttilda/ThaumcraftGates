@@ -4,17 +4,14 @@ import ganymedes01.thaumcraftgates.lib.Reference;
 import ganymedes01.thaumcraftgates.pipes.ThaumiumPipe;
 import ganymedes01.thaumcraftgates.research.ResearchPipe;
 import ganymedes01.thaumcraftgates.triggers.TriggerProvider;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
-import thaumcraft.api.ItemApi;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
-import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.ConfigResearch;
 import buildcraft.BuildCraftTransport;
 import buildcraft.api.statements.StatementManager;
@@ -45,7 +42,6 @@ public class ThaumcraftGates {
 		// Create and register Pipe
 		thaumiumPipe = BuildCraftTransport.buildPipe(ThaumiumPipe.class, "", BCCreativeTab.get("pipes"));
 		thaumiumPipe.setUnlocalizedName(Reference.MOD_ID + ".thaumiumPipe");
-		thaumiumPipe.setCreativeTab(Thaumcraft.tabTC);
 
 		// Register pipe renderer
 		if (event.getSide() == Side.CLIENT)
@@ -65,7 +61,7 @@ public class ThaumcraftGates {
 		AspectList list = new AspectList().add(Aspect.ORDER, 2).add(Aspect.EARTH, 2).add(Aspect.FIRE, 1).add(Aspect.AIR, 1).add(Aspect.ENTROPY, 1);
 
 		// Register Thaumium Pipe recipe
-		ConfigResearch.recipes.put("THAUMIUM_PIPE", ThaumcraftApi.addArcaneCraftingRecipe("THAUMIUM_PIPE", new ItemStack(thaumiumPipe, 8), list, "xyx", 'x', ItemApi.getItem("itemResource", 2), 'y', Blocks.glass));
+		ConfigResearch.recipes.put("THAUMIUM_PIPE", ThaumcraftApi.addArcaneCraftingRecipe("THAUMIUM_PIPE", new ItemStack(thaumiumPipe, 8), list, "xyx", 'x', "ingotThaumium", 'y', "blockGlassColorless"));
 
 		// Register Thaumium Pipe research
 		new ResearchPipe();
