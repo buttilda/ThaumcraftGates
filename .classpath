@@ -3,7 +3,7 @@
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="src" path="src/main/resources"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/forge17"/>
-	<classpathentry kind="lib" path="libs/buildcraft-7.0.5.jar"/>
 	<classpathentry kind="lib" path="libs/Thaumcraft-1.7.10-4.2.3.5.jar"/>
+	<classpathentry kind="lib" path="libs/buildcraft-7.1.9.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

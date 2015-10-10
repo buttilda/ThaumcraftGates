@@ -8,16 +8,15 @@ import net.minecraftforge.common.util.ForgeDirection;
 import buildcraft.api.core.IIconProvider;
 import buildcraft.transport.Pipe;
 import buildcraft.transport.PipeIconProvider;
+import buildcraft.transport.PipeTransportStructure;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@SuppressWarnings("rawtypes")
-public class ThaumiumPipe extends Pipe {
+public class ThaumiumPipe extends Pipe<PipeTransportStructure> {
 
 	@SideOnly(Side.CLIENT)
 	private static IIcon icon;
 
-	@SuppressWarnings("unchecked")
 	public ThaumiumPipe(Item item) {
 		super(new AspectPipe(), item);
 	}

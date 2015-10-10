@@ -13,9 +13,9 @@ import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.common.config.ConfigResearch;
-import buildcraft.BuildCraftTransport;
 import buildcraft.api.statements.StatementManager;
 import buildcraft.core.BCCreativeTab;
+import buildcraft.transport.BlockGenericPipe;
 import buildcraft.transport.TransportProxyClient;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -40,7 +40,7 @@ public class ThaumcraftGates {
 		MinecraftForge.EVENT_BUS.register(this);
 
 		// Create and register Pipe
-		thaumiumPipe = BuildCraftTransport.buildPipe(ThaumiumPipe.class, "", BCCreativeTab.get("pipes"));
+		thaumiumPipe = BlockGenericPipe.registerPipe(ThaumiumPipe.class, BCCreativeTab.get("pipes"));
 		thaumiumPipe.setUnlocalizedName(Reference.MOD_ID + ".thaumiumPipe");
 
 		// Register pipe renderer

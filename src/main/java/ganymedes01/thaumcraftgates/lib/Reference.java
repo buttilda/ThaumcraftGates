@@ -5,5 +5,5 @@ public class Reference {
 	public static final String MOD_ID = "thaumcraftgates";
 	public static final String MOD_NAME = "Thaumcraft Gates";
 	public static final String DEPENDENCIES = "required-after:Forge@[10.13.2.1230,);required-after:Thaumcraft;required-after:BuildCraft|Transport";
-	public static final String VERSION_NUMBER = "1.4.1";
+	public static final String VERSION_NUMBER = "1.4.2";
 }
