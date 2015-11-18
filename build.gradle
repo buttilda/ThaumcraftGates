@@ -22,7 +22,7 @@ group = "ganymedes01.thaumcraftgates"
 archivesBaseName = "ThaumcraftGates"
 
 minecraft {
-    version = "1.7.10-10.13.2.1230"
+    version = "1.7.10-10.13.4.1558"
     runDir = "eclipse/assets"
 }
 
