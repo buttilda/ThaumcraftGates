@@ -1,5 +1,7 @@
 package ganymedes01.thaumcraftgates.triggers;
 
+import buildcraft.api.statements.IStatementContainer;
+import buildcraft.api.statements.IStatementParameter;
 import ganymedes01.thaumcraftgates.lib.Reference;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.ItemStack;
@@ -9,8 +11,6 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.common.items.wands.ItemWandCasting;
 import thaumcraft.common.tiles.TileWandPedestal;
-import buildcraft.api.statements.IStatementContainer;
-import buildcraft.api.statements.IStatementParameter;
 
 public class EmptyWandTrigger extends StatementBase {
 

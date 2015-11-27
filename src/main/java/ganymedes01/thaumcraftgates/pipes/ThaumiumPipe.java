@@ -1,16 +1,16 @@
 package ganymedes01.thaumcraftgates.pipes;
 
-import ganymedes01.thaumcraftgates.lib.Reference;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.item.Item;
-import net.minecraft.util.IIcon;
-import net.minecraftforge.common.util.ForgeDirection;
 import buildcraft.api.core.IIconProvider;
 import buildcraft.transport.Pipe;
 import buildcraft.transport.PipeIconProvider;
 import buildcraft.transport.PipeTransportStructure;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ganymedes01.thaumcraftgates.lib.Reference;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.item.Item;
+import net.minecraft.util.IIcon;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class ThaumiumPipe extends Pipe<PipeTransportStructure> {
 

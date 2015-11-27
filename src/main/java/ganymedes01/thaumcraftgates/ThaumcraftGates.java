@@ -1,18 +1,5 @@
 package ganymedes01.thaumcraftgates;
 
-import ganymedes01.thaumcraftgates.lib.Reference;
-import ganymedes01.thaumcraftgates.pipes.ThaumiumPipe;
-import ganymedes01.thaumcraftgates.research.ResearchPipe;
-import ganymedes01.thaumcraftgates.triggers.TriggerProvider;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.client.MinecraftForgeClient;
-import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.common.MinecraftForge;
-import thaumcraft.api.ThaumcraftApi;
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectList;
-import thaumcraft.common.config.ConfigResearch;
 import buildcraft.api.statements.StatementManager;
 import buildcraft.core.BCCreativeTab;
 import buildcraft.transport.BlockGenericPipe;
@@ -26,6 +13,19 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ganymedes01.thaumcraftgates.lib.Reference;
+import ganymedes01.thaumcraftgates.pipes.ThaumiumPipe;
+import ganymedes01.thaumcraftgates.research.ResearchPipe;
+import ganymedes01.thaumcraftgates.triggers.TriggerProvider;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.common.MinecraftForge;
+import thaumcraft.api.ThaumcraftApi;
+import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.aspects.AspectList;
+import thaumcraft.common.config.ConfigResearch;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION_NUMBER, dependencies = Reference.DEPENDENCIES)
 public class ThaumcraftGates {

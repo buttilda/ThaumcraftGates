@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
-import thaumcraft.api.aspects.IAspectContainer;
-import thaumcraft.common.tiles.TileWandPedestal;
 import buildcraft.api.statements.IStatementContainer;
 import buildcraft.api.statements.ITriggerExternal;
 import buildcraft.api.statements.ITriggerInternal;
 import buildcraft.api.statements.ITriggerProvider;
 import buildcraft.api.statements.StatementManager;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.util.ForgeDirection;
+import thaumcraft.api.aspects.IAspectContainer;
+import thaumcraft.common.tiles.TileWandPedestal;
 
 public class TriggerProvider implements ITriggerProvider {
 

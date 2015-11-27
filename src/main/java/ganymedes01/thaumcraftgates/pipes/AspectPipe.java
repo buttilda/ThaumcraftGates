@@ -1,9 +1,9 @@
 package ganymedes01.thaumcraftgates.pipes;
 
+import buildcraft.transport.PipeTransportStructure;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.api.aspects.IAspectContainer;
-import buildcraft.transport.PipeTransportStructure;
 
 public class AspectPipe extends PipeTransportStructure {
 

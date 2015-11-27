@@ -1,10 +1,10 @@
 package ganymedes01.thaumcraftgates.triggers;
 
-import net.minecraft.util.IIcon;
-import net.minecraft.util.StatCollector;
 import buildcraft.api.statements.IStatement;
 import buildcraft.api.statements.IStatementParameter;
 import buildcraft.api.statements.ITriggerExternal;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
 
 public abstract class StatementBase implements ITriggerExternal {
 
